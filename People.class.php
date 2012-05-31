@@ -24,6 +24,14 @@ class People implements person
 {
 	protected $people_data = array();
 	
+	public function People($person_id = NULL)
+	{
+		if( is_numeric($person_id) )
+		{
+			$this->load($person_id);
+		}
+	}
+	
 	public function setName($name)
 	{
 		$this->people_data['name'] = $name;
@@ -42,6 +50,11 @@ class People implements person
 		{
 			echo $key . ': ' . $val . PHP_EOL;
 		}
+	}
+	
+	public function load($id)
+	{
+		$this->people_data = $this->find(array('id' => $id), true);
 	}
 	
 	public function __set($key, $value)
