@@ -1,5 +1,7 @@
 <?php
 
+require_once('Database.class.php');
+
 /**
  * People Interface
  *
@@ -19,8 +21,12 @@ interface person
  *
  * This class is designed to track the bare minimum data that shared by
  * all people.
+ * 
+ * Extending would actually be "Datasource" and use an over-lord like
+ * Datasource class that sould select the proper class to use based on
+ * configuration, etc
  */
-class People implements person
+class People extends MySQL implements person
 {
 	protected $people_data = array();
 	
