@@ -1,0 +1,38 @@
+#!/bin/env php5
+<?php
+
+/**
+ * Dirty secret, I've been known to write command line tools in php
+ * If the shoe fits?
+ */
+
+set_include_path(get_include_path() . PATH_SEPARATOR . 'lib/');
+
+array_shift($argv);
+$application = array_shift($argv);
+
+require_once('Application.class.php');
+
+if( is_file('app/' . $application . '.php') )
+{
+	require_once('app/' . $application . '.php');
+	
+	try
+	{
+		$app = new $application();
+		
+		if( !empty($argv) )
+		{
+			$method = array_shift($argv);
+			
+			if( is_callable(array($app, $method)) )
+			{
+				call_user_func_array(array($app, $method), $argv)
+			}
+		}
+	}
+	catch(Exception $e)
+	{
+		// Error out, there is no Application
+	}
+}
